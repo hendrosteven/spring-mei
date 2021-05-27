@@ -1,5 +1,7 @@
 package com.demo.contollers;
 
+import java.util.List;
+
 import com.demo.dto.SearchRequest;
 import com.demo.model.Product;
 import com.demo.service.ProductService;
@@ -44,7 +46,12 @@ public class ProductController {
     }
 
     @PostMapping("/search")
-    public void removeById(@RequestBody SearchRequest search) {
-        service.findByName(search.getKey());
+    public List<Product> findByName(@RequestBody SearchRequest search) {
+        return service.findByName(search.getKey());
+    }
+
+    @GetMapping("/category/{id}")
+    public List<Product> findByCategoryId(@PathVariable("id") Long id) {
+        return service.findByCategoryId(id);
     }
 }

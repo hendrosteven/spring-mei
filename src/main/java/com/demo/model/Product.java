@@ -30,6 +30,8 @@ public class Product {
     @ManyToOne
     private Category category;
 
+    public Product(){}
+
     public Product(Long id, String code, String name, String description, double price, Category category) {
         this.id = id;
         this.code = code;
