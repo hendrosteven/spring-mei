@@ -29,24 +29,15 @@ public class Product {
 
     @ManyToOne
     private Category category;
-    
-    public Product(Long id, String name, double price, Category category) {
+
+    public Product(Long id, String code, String name, String description, double price, Category category) {
         this.id = id;
+        this.code = code;
         this.name = name;
+        this.description = description;
         this.price = price;
         this.category = category;
     }
-
-    
-    public Category getCategory() {
-        return category;
-    }
-
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
 
     public Long getId() {
         return id;
@@ -54,6 +45,14 @@ public class Product {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getName() {
@@ -64,6 +63,14 @@ public class Product {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public double getPrice() {
         return price;
     }
@@ -71,6 +78,16 @@ public class Product {
     public void setPrice(double price) {
         this.price = price;
     }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+    
+    
 
     
 }
