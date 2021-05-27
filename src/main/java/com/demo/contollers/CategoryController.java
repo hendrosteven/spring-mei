@@ -1,5 +1,6 @@
 package com.demo.contollers;
 
+import com.demo.dto.SearchRequest;
 import com.demo.model.Category;
 import com.demo.service.CategoryService;
 
@@ -32,4 +33,10 @@ public class CategoryController {
     public Category findById(@PathVariable("id") Long id){
         return categoryService.findById(id);
     }
+
+    @PostMapping("/search")
+    public Iterable<Category> findByName(@RequestBody SearchRequest search){
+        return categoryService.findByName(search.getKey());
+    }
+    
 }
