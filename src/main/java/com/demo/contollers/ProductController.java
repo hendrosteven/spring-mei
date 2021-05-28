@@ -2,11 +2,20 @@ package com.demo.contollers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
+import com.demo.dto.DataResponse;
+import com.demo.dto.ProductRequest;
 import com.demo.dto.SearchRequest;
 import com.demo.model.Product;
+import com.demo.service.CategoryService;
 import com.demo.service.ProductService;
+import com.demo.utility.ErrorParsingUtility;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,9 +30,39 @@ public class ProductController {
     @Autowired
     private ProductService service;
 
+    @Autowired
+    private CategoryService categoryService;
+
     @PostMapping
-    public Product createOne(@RequestBody Product product) {
-        return service.save(product);
+    public ResponseEntity<DataResponse> createOne(@Valid @RequestBody ProductRequest productRequest, Errors errors) {
+
+        DataResponse response = new DataResponse();
+        if(errors.hasErrors()){
+            response.setStatus(false);
+            response.setMessages(ErrorParsingUtility.parse(errors));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }else{
+            try{
+                Product product = new Product();
+                product.setCode(productRequest.getCode());
+                product.setName(productRequest.getName());
+                product.setDescription(productRequest.getDescription());
+                product.setPrice(productRequest.getPrice());
+                product.setCategory(categoryService.findById(productRequest.getCategoryId()));
+
+                service.save(product);
+                
+                response.setStatus(true);
+                response.getMessages().add("Product saved");
+                response.setPayload(product);
+
+                return ResponseEntity.ok(response);
+            }catch(Exception ex){
+                response.setStatus(false);
+                response.getMessages().add(ex.getMessage());
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+            }
+        }
     }
 
     @GetMapping("/{size}/{page}")
