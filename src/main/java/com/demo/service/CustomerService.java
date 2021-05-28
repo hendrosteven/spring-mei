@@ -20,4 +20,8 @@ public class CustomerService {
     public Iterable<Customer> findAll(){
         return customerRepo.findAll();
     }
+
+    public void remove(Long id){
+        customerRepo.deleteById(id);
+    }
 }
