@@ -6,8 +6,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.ParamDef;
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +18,9 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "tbl_customers")
 @SQLDelete(sql="UPDATE tbl_customers SET deleted = true WHERE id=?")
-@Where(clause = "deleted=false")
+//@Where(clause = "deleted=false")
+@FilterDef(name="deletedCustomerFilter", parameters= @ParamDef(name="isDeleted", type="boolean"))
+@Filter(name="deletedCustomerFilter", condition = "deleted = :isDeleted")
 @Data
 @NoArgsConstructor
 public class Customer {
