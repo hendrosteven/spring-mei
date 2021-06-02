@@ -32,7 +32,7 @@ public class SecurityFilter extends WebSecurityConfigurerAdapter{
         http.authorizeRequests()
             .antMatchers("/").permitAll()
             .antMatchers(HttpMethod.POST, "/api/apps/**").permitAll()
-            .antMatchers("/swagger-ui.html/**").permitAll()
+            //.antMatchers("/swagger-ui/**").permitAll()
            // .antMatchers("/endpoint lain").permitAll()
             .anyRequest().fullyAuthenticated()
             .and().httpBasic()

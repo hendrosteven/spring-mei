@@ -24,7 +24,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Import(BeanValidatorPluginsConfiguration.class)
 public class SwaggerConfig {
 
-    @SuppressWarnings("deprecation")
     private List<Parameter> globalParameterList(){
         Parameter param = new ParameterBuilder()
             .name("SESSIONID")
@@ -35,7 +34,6 @@ public class SwaggerConfig {
             return Collections.singletonList(param);
     }
 
-    @SuppressWarnings("deprecation")
     @Bean
     public Docket apiDocket(){
         return new Docket(DocumentationType.SWAGGER_2)
